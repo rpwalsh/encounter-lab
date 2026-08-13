@@ -159,7 +159,7 @@ async function request<T>(
 }
 
 export async function getEncounter(
-  characterId = 'briv',
+  characterId = 'player',
   options: RequestOptions = {},
 ): Promise<Encounter> {
   const data = await request<{ encounter: Encounter }>(

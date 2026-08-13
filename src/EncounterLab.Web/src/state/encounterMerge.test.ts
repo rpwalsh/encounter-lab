@@ -3,7 +3,7 @@ import type { Character, CombatEvent, CombatResult, Encounter } from '../types';
 import { mergeCombatResult, mergeEncounterSnapshot } from './encounterMerge';
 
 const character = (version: number): Character => ({
-  id: 'briv', name: 'Briv', level: 5, classes: [],
+  id: 'player', name: 'Player', level: 5, classes: [],
   stats: { strength: 15, dexterity: 12, constitution: 16, intelligence: 13, wisdom: 10, charisma: 8 },
   items: [],
   hitPoints: { current: 25 - version, maximum: 25, temporary: 0 },
@@ -12,7 +12,7 @@ const character = (version: number): Character => ({
 
 const event = (sequence: number): CombatEvent => ({
   id: `event-${sequence}`, sequence, occurredAt: new Date(sequence).toISOString(),
-  commandId: `command-${sequence}`, characterId: 'briv', type: 'DamageApplied',
+  commandId: `command-${sequence}`, characterId: 'player', type: 'DamageApplied',
   summary: `event ${sequence}`, details: {},
   stateAfter: { currentHitPoints: 25 - sequence, maximumHitPoints: 25, temporaryHitPoints: 0, version: sequence },
 });

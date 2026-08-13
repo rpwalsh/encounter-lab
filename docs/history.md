@@ -22,7 +22,7 @@ reconstruction, and is not repeated here in detail.
 
 | Date/time | Snapshot | What actually changed (verified by diff) |
 |---|---|---|
-| 07-31 02:55 | `hasbro-wotc-code-test-winner` | Earliest available snapshot: the base take-home submission — server-authoritative combat domain, GraphQL/SignalR API, React/Three.js client. |
+| 07-31 02:55 | `take-home-code-test-winner` | Earliest available snapshot: the base take-home submission — server-authoritative combat domain, GraphQL/SignalR API, React/Three.js client. |
 | 07-31 03:19 | `encounter-lab-reviewed-candidate-v2` | A self-review pass (`REVIEW_FINDINGS.md`, `SUBMISSION_NOTES.md`, both since superseded by this doc and `docs/scope.md`/`docs/tradeoffs.md`) fixed stale-state ordering, idempotency scoping, dice-modifier overflow handling, and — notably — corrected an earlier run artifact that had claimed unexecuted tests passed. That specific failure mode recurred in this session (see `.ai/rejected/` and the confrontation that produced the current `.ai/` convention) and was corrected the same way: the false claim was found and fixed, not left standing. |
 | 07-31 03:47 | `encounter-lab-fixed-full` | `docs/scope.md` introduced; domain/infrastructure fixes (`CombatService.cs`, `CharacterState.cs`, `DiceExpression.cs`, `SqliteCombatStore.cs`). |
 | 07-31 12:49 | `encounter-lab-toolchain-fixed` | Build/dependency toolchain repairs (`Directory.Packages.props`, three `.csproj` files, `package.json`, `setup.ps1`/`.sh`) — a ~9 hour gap from the prior snapshot suggests a separate work session. |

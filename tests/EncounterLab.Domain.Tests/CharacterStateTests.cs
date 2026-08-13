@@ -77,8 +77,8 @@ public sealed class CharacterStateTests
 
     private static CharacterState Create() =>
         new(
-            "briv",
-            "Briv",
+            "player",
+            "Player",
             5,
             [new CharacterClass("fighter", 10, 5)],
             new AbilityScores(15, 12, 14, 13, 10, 8),

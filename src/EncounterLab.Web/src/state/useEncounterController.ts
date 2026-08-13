@@ -196,7 +196,7 @@ export function useEncounterController() {
     loadAbort.current = controller;
 
     try {
-      const value = await getEncounter('briv', { signal: controller.signal });
+      const value = await getEncounter('player', { signal: controller.signal });
       if (!mounted.current || generation !== loadGeneration.current) return null;
       updateEncounter((current) => mergeEncounterSnapshot(current, value));
       setLoadError(null);

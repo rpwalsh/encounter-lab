@@ -13,7 +13,7 @@ public sealed class GraphQlTests
         await using var fixture = CreateFixture();
         using var response = await fixture.SendAsync("""
             query {
-              encounter(characterId: "briv") {
+              encounter(characterId: "player") {
                 character { name level version hitPoints { current maximum temporary } }
                 events { id }
               }
@@ -21,7 +21,7 @@ public sealed class GraphQlTests
             """);
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var character = document.RootElement.GetProperty("data").GetProperty("encounter").GetProperty("character");
-        Assert.Equal("Briv", character.GetProperty("name").GetString());
+        Assert.Equal("Player", character.GetProperty("name").GetString());
         Assert.Equal(25, character.GetProperty("hitPoints").GetProperty("current").GetInt32());
     }
 
@@ -43,7 +43,7 @@ public sealed class GraphQlTests
         {
             input = new
             {
-                characterId = "briv",
+                characterId = "player",
                 commandId,
                 expectedVersion = 0,
                 amount = 14,
@@ -80,14 +80,14 @@ public sealed class GraphQlTests
         {
             input = new
             {
-                characterId = "briv", commandId, expectedVersion = 0, amount = 1, damageType = "PIERCING"
+                characterId = "player", commandId, expectedVersion = 0, amount = 1, damageType = "PIERCING"
             }
         });
         using var second = await fixture.SendAsync(query, new
         {
             input = new
             {
-                characterId = "briv", commandId, expectedVersion = 0, amount = 2, damageType = "PIERCING"
+                characterId = "player", commandId, expectedVersion = 0, amount = 2, damageType = "PIERCING"
             }
         });
 
@@ -103,11 +103,11 @@ public sealed class GraphQlTests
     {
         await using var fixture = CreateFixture();
         using var response = await fixture.SendAsync("""
-            query { encounter(characterId: "  BRIV  ") { character { id name } } }
+            query { encounter(characterId: "  PLAYER  ") { character { id name } } }
             """);
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var character = document.RootElement.GetProperty("data").GetProperty("encounter").GetProperty("character");
-        Assert.Equal("briv", character.GetProperty("id").GetString());
+        Assert.Equal("player", character.GetProperty("id").GetString());
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public sealed class GraphQlTests
         {
             input = new
             {
-                characterId = "briv",
+                characterId = "player",
                 commandId = Guid.NewGuid().ToString("N"),
                 expectedVersion = 99,
                 amount = 1,
@@ -145,7 +145,7 @@ public sealed class GraphQlTests
         using var response = await fixture.SendAsync("""
             mutation {
               healCharacter(input: {
-                characterId: "briv",
+                characterId: "player",
                 commandId: "negative-version",
                 expectedVersion: -1,
                 amount: 1
@@ -177,7 +177,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv",
+                    characterId = "player",
                     commandId = Guid.NewGuid().ToString("N"),
                     expectedVersion = 0,
                     amount = 8,
@@ -210,7 +210,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0, amount = 10
+                    characterId = "player", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0, amount = 10
                 }
             });
         using var firstDocument = await JsonDocument.ParseAsync(await first.Content.ReadAsStreamAsync());
@@ -225,7 +225,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 1, amount = 5
+                    characterId = "player", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 1, amount = 5
                 }
             });
         using var secondDocument = await JsonDocument.ParseAsync(await second.Content.ReadAsStreamAsync());
@@ -253,7 +253,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0, amount = 10
+                    characterId = "player", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0, amount = 10
                 }
             });
         using var grantDocument = await JsonDocument.ParseAsync(await grant.Content.ReadAsStreamAsync());
@@ -270,7 +270,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = Guid.NewGuid().ToString("N"), expectedVersion = version
+                    characterId = "player", commandId = Guid.NewGuid().ToString("N"), expectedVersion = version
                 }
             });
         using var clearDocument = await JsonDocument.ParseAsync(await clear.Content.ReadAsStreamAsync());
@@ -280,12 +280,12 @@ public sealed class GraphQlTests
     }
 
     [Fact]
-    public async Task ConstitutionReflectsTheIounStoneModifier()
+    public async Task ConstitutionReflectsTheRockOfFortitudeModifier()
     {
         await using var fixture = CreateFixture();
         using var response = await fixture.SendAsync(
             """
-            query { encounter(characterId: "briv") { character { stats { constitution } } } }
+            query { encounter(characterId: "player") { character { stats { constitution } } } }
             """);
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var constitution = document.RootElement.GetProperty("data").GetProperty("encounter")
@@ -328,7 +328,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0,
+                    characterId = "player", commandId = Guid.NewGuid().ToString("N"), expectedVersion = 0,
                     amount = 3, damageType = "PIERCING"
                 }
             });
@@ -336,21 +336,21 @@ public sealed class GraphQlTests
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var character = document.RootElement.GetProperty("data").GetProperty("applyDamage").GetProperty("character");
 
-        Assert.Equal("Briv", character.GetProperty("name").GetString());
+        Assert.Equal("Player", character.GetProperty("name").GetString());
         Assert.Equal(15, character.GetProperty("stats").GetProperty("strength").GetInt32());
         Assert.Equal(12, character.GetProperty("stats").GetProperty("dexterity").GetInt32());
         Assert.Equal(13, character.GetProperty("stats").GetProperty("intelligence").GetInt32());
         Assert.Equal(10, character.GetProperty("stats").GetProperty("wisdom").GetInt32());
         Assert.Equal(8, character.GetProperty("stats").GetProperty("charisma").GetInt32());
         var item = character.GetProperty("items")[0];
-        Assert.Equal("Ioun Stone of Fortitude", item.GetProperty("name").GetString());
+        Assert.Equal("Rock of Fortitude", item.GetProperty("name").GetString());
         Assert.Equal("constitution", item.GetProperty("modifier").GetProperty("affectedValue").GetString());
         Assert.Equal(2, item.GetProperty("modifier").GetProperty("value").GetInt32());
         Assert.Equal("fighter", character.GetProperty("classes")[0].GetProperty("name").GetString());
 
         var @event = document.RootElement.GetProperty("data").GetProperty("applyDamage").GetProperty("event");
         Assert.False(string.IsNullOrEmpty(@event.GetProperty("occurredAt").GetString()));
-        Assert.Equal("briv", @event.GetProperty("characterId").GetString());
+        Assert.Equal("player", @event.GetProperty("characterId").GetString());
         Assert.Equal("DamageApplied", @event.GetProperty("type").GetString());
         Assert.False(string.IsNullOrEmpty(@event.GetProperty("summary").GetString()));
     }
@@ -435,7 +435,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv", commandId = new string('c', 129), expectedVersion = 0, amount = 1, damageType = "PIERCING"
+                    characterId = "player", commandId = new string('c', 129), expectedVersion = 0, amount = 1, damageType = "PIERCING"
                 }
             });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
@@ -452,7 +452,7 @@ public sealed class GraphQlTests
             """
             mutation Damage($input: DamageInput!) { applyDamage(input: $input) { character { version } } }
             """,
-            new { input = new { characterId = "briv", commandId = "", expectedVersion = 0, amount = 1, damageType = "PIERCING" } });
+            new { input = new { characterId = "player", commandId = "", expectedVersion = 0, amount = 1, damageType = "PIERCING" } });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.Equal(
             "VALIDATION_ERROR",
@@ -467,7 +467,7 @@ public sealed class GraphQlTests
             """
             mutation Heal($input: HealInput!) { healCharacter(input: $input) { character { version } } }
             """,
-            new { input = new { characterId = "briv", commandId = "c", expectedVersion = 0, amount = 0 } });
+            new { input = new { characterId = "player", commandId = "c", expectedVersion = 0, amount = 0 } });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.Equal(
             "VALIDATION_ERROR",
@@ -482,7 +482,7 @@ public sealed class GraphQlTests
             """
             mutation Roll($input: DiceRollInput!) { rollDice(input: $input) { character { version } } }
             """,
-            new { input = new { characterId = "briv", commandId = "c", expectedVersion = 0, expression = "" } });
+            new { input = new { characterId = "player", commandId = "c", expectedVersion = 0, expression = "" } });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.Equal(
             "VALIDATION_ERROR",
@@ -497,7 +497,7 @@ public sealed class GraphQlTests
             """
             mutation Roll($input: DiceRollInput!) { rollDice(input: $input) { character { version } } }
             """,
-            new { input = new { characterId = "briv", commandId = "c", expectedVersion = 0, expression = new string('1', 65) } });
+            new { input = new { characterId = "player", commandId = "c", expectedVersion = 0, expression = new string('1', 65) } });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.Equal(
             "VALIDATION_ERROR",
@@ -512,7 +512,7 @@ public sealed class GraphQlTests
             """
             mutation Roll($input: DiceRollInput!) { rollDice(input: $input) { character { version } } }
             """,
-            new { input = new { characterId = "briv", commandId = "c", expectedVersion = 0, expression = "not-a-roll" } });
+            new { input = new { characterId = "player", commandId = "c", expectedVersion = 0, expression = "not-a-roll" } });
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.Equal(
             "VALIDATION_ERROR",
@@ -529,7 +529,7 @@ public sealed class GraphQlTests
               healCharacter(input: $input) { wasReplay character { hitPoints { current } } }
             }
             """;
-        var variables = new { input = new { characterId = "briv", commandId, expectedVersion = 0, amount = 5 } };
+        var variables = new { input = new { characterId = "player", commandId, expectedVersion = 0, amount = 5 } };
 
         using var first = await fixture.SendAsync(query, variables);
         using var second = await fixture.SendAsync(query, variables);
@@ -562,7 +562,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv",
+                    characterId = "player",
                     commandId = Guid.NewGuid().ToString("N"),
                     expectedVersion = 0,
                     amount = 10
@@ -579,7 +579,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv",
+                    characterId = "player",
                     commandId = Guid.NewGuid().ToString("N"),
                     expectedVersion = 1,
                     amount = 19,
@@ -598,7 +598,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv",
+                    characterId = "player",
                     commandId = Guid.NewGuid().ToString("N"),
                     expectedVersion = 2,
                     expression = "1d8+1d6+3"
@@ -619,7 +619,7 @@ public sealed class GraphQlTests
             {
                 input = new
                 {
-                    characterId = "briv",
+                    characterId = "player",
                     commandId = Guid.NewGuid().ToString("N"),
                     expectedVersion = 3
                 }

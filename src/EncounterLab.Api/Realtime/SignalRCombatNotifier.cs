@@ -44,7 +44,7 @@ public sealed class SignalRCombatNotifier(
             try
             {
                 await hubContext.Clients
-                    .Group(CombatHub.BrivGroup)
+                    .Group(CombatHub.PlayerGroup)
                     .SendAsync(
                         "combatEventCommitted",
                         CombatResultPayload.From(result),

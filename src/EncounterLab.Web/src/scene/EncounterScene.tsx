@@ -44,7 +44,7 @@ const skeletonWarriorModelUrl = '/models/SkeletonWarrior.glb';
 
 const cameraTarget = new Vector3(0, 1.05, 0);
 const defaultCameraPosition = new Vector3(5.8, 4.2, 7.8);
-const brivPosition = new Vector3(-1.75, 1.05, .15);
+const playerPosition = new Vector3(-1.75, 1.05, .15);
 const enemyPosition = new Vector3(1.75, 1.25, -.15);
 
 interface CameraCommand { action: CameraAction; sequence: number; }
@@ -274,7 +274,7 @@ function LicensedCharacterModel({
   );
 }
 
-function BrivModel({ projection, paused, characterName }: { projection: CharacterStateProjection; paused: boolean; characterName: string }) {
+function PlayerModel({ projection, paused, characterName }: { projection: CharacterStateProjection; paused: boolean; characterName: string }) {
   const ratio = projection.currentHitPoints / projection.maximumHitPoints;
   const glowColor = hitPointColor(ratio);
   const glowIntensity = ratio > .55 ? .1 : ratio > .25 ? .2 : .34;
@@ -428,7 +428,7 @@ function SmokeWisps({ paused }: { paused: boolean }) {
   );
 }
 
-// Charred ground pit: a dark scorched disc under the Ash Warden with a
+// Charred ground pit: a dark scorched disc under the Fire Demon with a
 // layered glowing rim (several concentric rings at falling opacity, rather
 // than one hard-edged ring) so the glow reads as a soft gradient.
 function CharredPit({ paused }: { paused: boolean }) {
@@ -480,7 +480,7 @@ function EnemyModel({ paused }: { paused: boolean }) {
       />
       <Html center position={[0, 2.5, 0]} distanceFactor={8}>
         <div className={`${styles.nameplate} ${styles.nameplateEnemy}`} aria-hidden="true">
-          ASH WARDEN
+          FIRE DEMON
           <div className={styles.nameplateHpTrack}>
             <span style={{ width: '100%', backgroundColor: '#ef6159' }} />
           </div>
@@ -569,11 +569,11 @@ function CombatEffect({ event, paused }: { event: CombatEvent | null; paused: bo
           key={event.id}
           type={event.details.damageType}
           source={enemyPosition}
-          target={brivPosition}
+          target={playerPosition}
           paused={paused}
         />
       )}
-      <group ref={heal} visible={false} position={[brivPosition.x, .25, brivPosition.z]}>
+      <group ref={heal} visible={false} position={[playerPosition.x, .25, playerPosition.z]}>
         <pointLight color="#72dfa1" intensity={3.6} distance={4} />
         {[0, .24, .48].map((height) => (
           <mesh key={height} rotation={[Math.PI / 2, 0, 0]} position={[0, height, 0]}>
@@ -582,7 +582,7 @@ function CombatEffect({ event, paused }: { event: CombatEvent | null; paused: bo
           </mesh>
         ))}
       </group>
-      <group ref={shield} visible={false} position={[brivPosition.x, brivPosition.y, brivPosition.z]}>
+      <group ref={shield} visible={false} position={[playerPosition.x, playerPosition.y, playerPosition.z]}>
         <pointLight color="#91f5e1" intensity={3.8} distance={4} />
         <mesh>
           <icosahedronGeometry args={[.86, 2]} />
@@ -652,7 +652,7 @@ function SceneContent({ projection, event, paused, cameraCommand, characterName 
       <gridHelper args={[16, 16, '#5abca1', '#153b30']} position={[0, .012, 0]} />
       <ForestSet />
       <Suspense fallback={<Html center><div className={styles.modelLoading}>Loading models</div></Html>}>
-        <BrivModel projection={projection} paused={paused} characterName={characterName} />
+        <PlayerModel projection={projection} paused={paused} characterName={characterName} />
         <EnemyModel paused={paused} />
       </Suspense>
       <CombatEffect event={event} paused={paused} />
@@ -662,7 +662,7 @@ function SceneContent({ projection, event, paused, cameraCommand, characterName 
   );
 }
 
-export function EncounterScene({ projection, event, reducedMotion, simplified = false, characterName = 'Briv' }: { projection: CharacterStateProjection; event: CombatEvent | null; reducedMotion: boolean; simplified?: boolean; characterName?: string }) {
+export function EncounterScene({ projection, event, reducedMotion, simplified = false, characterName = 'Player' }: { projection: CharacterStateProjection; event: CombatEvent | null; reducedMotion: boolean; simplified?: boolean; characterName?: string }) {
   const sequence = useRef(0);
   const [cameraCommand, setCameraCommand] = useState<CameraCommand | null>(null);
   const controlCamera = (action: CameraAction) => {
@@ -693,7 +693,7 @@ export function EncounterScene({ projection, event, reducedMotion, simplified = 
       <h2 id="scene-heading" className={styles.srOnly}>Encounter battlefield</h2>
       <p id="scene-description" className={styles.srOnly}>
         {simplified
-          ? 'A text summary of Briv and the Ash Warden.'
+          ? 'A text summary of Player and the Fire Demon.'
           : 'A three-dimensional forest battlefield. Focus the battlefield to use arrow keys, plus, minus, and Home for the camera. All combat information is also available as text.'}
       </p>
       {simplified ? (

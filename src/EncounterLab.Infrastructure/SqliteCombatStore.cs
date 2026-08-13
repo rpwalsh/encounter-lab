@@ -167,7 +167,7 @@ public sealed class SqliteCombatStore(
                     reset,
                     UncommittedCombatEvent.Create(
                         "EncounterReset",
-                        "The encounter was reset to Briv's initial state.",
+                        "The encounter was reset to Player's initial state.",
                         new CombatEventDetails(),
                         reset));
             },

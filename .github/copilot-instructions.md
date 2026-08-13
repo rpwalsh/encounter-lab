@@ -1,6 +1,6 @@
 # Encounter Lab — always-on project instructions
 
-Encounter Lab is a server-authoritative Briv combat-state sample. A React
+Encounter Lab is a server-authoritative Player combat-state sample. A React
 client presents state; a C# domain/application/API stack owns every rule and
 every committed fact.
 

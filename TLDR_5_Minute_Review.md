@@ -1,6 +1,6 @@
 # TLDR – 5 Minute Technical Review
 
-**Goal:** This repository intentionally solves the published D&D Beyond Back-End Developer Challenge **and** the Full-Stack Addendum, while demonstrating the architecture I would use for a production-quality interactive game system.
+**Goal:** This repository intentionally solves the published take-home Back-End Developer Challenge **and** the Full-Stack Addendum, while demonstrating the architecture I would use for a production-quality interactive game system.
 
 If you only have **5 minutes**, read the files below in order.
 

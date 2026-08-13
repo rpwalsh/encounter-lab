@@ -13,7 +13,7 @@
   ],
   "rootCauses": [
     "nameplate letters wrapped because drei's <Html> wrapper sizes its child to a narrow auto width with no white-space override",
-    "Briv's model simply never had a nameplate element added, unlike the enemy's",
+    "Player's model simply never had a nameplate element added, unlike the enemy's",
     "ConnectionBadge had no awareness of reducedMotion at all"
   ],
   "executedValidation": [

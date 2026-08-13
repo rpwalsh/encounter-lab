@@ -7,7 +7,7 @@ import { CombatTranscript } from './CombatTranscript';
 function makeEvent(overrides: Partial<CombatEvent> = {}): CombatEvent {
   return {
     id: 'event-1', sequence: 1, occurredAt: new Date(0).toISOString(), commandId: 'command-1',
-    characterId: 'briv', type: 'DamageApplied', summary: 'Briv took damage.',
+    characterId: 'player', type: 'DamageApplied', summary: 'Player took damage.',
     details: {}, stateAfter: { currentHitPoints: 20, maximumHitPoints: 25, temporaryHitPoints: 0, version: 1 },
     ...overrides,
   };

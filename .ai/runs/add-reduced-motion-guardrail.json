@@ -13,5 +13,5 @@
     "deliberately reintroduced the exact bug this check exists for (sed-stripped the 'if (paused) return;' line from Sparks in EncounterScene.tsx), re-ran the check, and confirmed it failed with the specific message naming 'EncounterScene.tsx:Sparks' - not a generic failure, the exact component - then restored the line and re-ran clean",
     "npx tsc --noEmit -p tsconfig.app.json / python architecture-check.py / ui-quality-check.py: all still pass after this change (this is a Python-only change, no frontend source touched)"
   ],
-  "note": "This exists because ash-warden-fire-effects-001's run record flagged it as a real, unfilled gap rather than pretending accessibility-check.py already covered this class of bug. Writing the check was the direct follow-through on that gap, not a separate idea."
+  "note": "This exists because fire-demon-effects-001's run record flagged it as a real, unfilled gap rather than pretending accessibility-check.py already covered this class of bug. Writing the check was the direct follow-through on that gap, not a separate idea."
 }

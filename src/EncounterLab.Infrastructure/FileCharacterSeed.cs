@@ -6,7 +6,7 @@ namespace EncounterLab.Infrastructure;
 
 public sealed class FileCharacterSeed(string filePath) : ICharacterSeed
 {
-    private readonly Lazy<BrivFileModel> model = new(() => Load(filePath));
+    private readonly Lazy<PlayerFileModel> model = new(() => Load(filePath));
 
     public CharacterState Create(int version = 0)
     {
@@ -77,20 +77,20 @@ public sealed class FileCharacterSeed(string filePath) : ICharacterSeed
         return scores;
     }
 
-    private static BrivFileModel Load(string filePath)
+    private static PlayerFileModel Load(string filePath)
     {
         if (!File.Exists(filePath))
         {
-            throw new FileNotFoundException("The challenge-provided briv.json file was not found.", filePath);
+            throw new FileNotFoundException("The challenge-provided player.json file was not found.", filePath);
         }
 
-        var value = JsonSerializer.Deserialize<BrivFileModel>(
+        var value = JsonSerializer.Deserialize<PlayerFileModel>(
             File.ReadAllText(filePath),
             JsonDefaults.Options);
-        return value ?? throw new InvalidDataException("briv.json could not be deserialized.");
+        return value ?? throw new InvalidDataException("player.json could not be deserialized.");
     }
 
-    private sealed record BrivFileModel(
+    private sealed record PlayerFileModel(
         string Name,
         int Level,
         int HitPoints,

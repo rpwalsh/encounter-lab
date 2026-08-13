@@ -44,7 +44,7 @@ this tradeoff is safe to make.
 **Picked:** A single GraphQL endpoint (Hot Chocolate, C#) for both the
 character query and every combat command (mutations).
 
-**Not picked:** A REST resource-per-verb API (`POST /api/briv/damage`,
+**Not picked:** A REST resource-per-verb API (`POST /api/player/damage`,
 etc.).
 
 **Why:** The frontend needs one shaped read (character + HP + defenses +
@@ -138,7 +138,7 @@ compromise so much as an accurate model of what actually happened.
 
 ## No authentication or authorization
 
-**Picked:** Nothing. Any client that can reach the API can act as Briv.
+**Picked:** Nothing. Any client that can reach the API can act as Player.
 
 **Why:** This is a single-character combat-rules and sync demonstration,
 not a multi-tenant application. Adding auth would mean inventing a user
@@ -235,7 +235,7 @@ Accepted because the five-minute reviewer path in `README.md` never
 routes through this code, so a reviewer who doesn't care about the 3D
 scene never has to look at it to finish a full review.
 
-## Not attempted: a full D&D rules engine, campaign builder, or asset marketplace
+## Not attempted: a full tabletop RPG rules engine, campaign builder, or asset marketplace
 
 **Why not:** None of these were asked for, and each is a multi-month
 scope on its own (full spell/condition/multiclass rules; persistent

@@ -1,9 +1,9 @@
 id: death-resurrection-sequence-001
 objective: >
-  At 0 current HP, replace Briv's model with a 3D skull-and-gravestone
+  At 0 current HP, replace Player's model with a 3D skull-and-gravestone
   presentation. When HP rises above 0 again (healing after "death"), play a
   resurrection light-spiral transition: gravestone/skull fades into a ghost,
-  then into Briv. Iterate on all existing damage-type VFX alongside this for
+  then into Player. Iterate on all existing damage-type VFX alongside this for
   consistent, high-end commercial polish.
 scope:
   allow:

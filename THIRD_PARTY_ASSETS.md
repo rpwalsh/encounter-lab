@@ -4,7 +4,7 @@
 
 Encounter Lab uses one character model from the KayKit Character Pack: Adventurers:
 
-- `Knight.glb` for Briv (its `1H_Sword` mesh is also grafted onto the Ash Warden's hand socket — see below)
+- `Knight.glb` for Player (its `1H_Sword` mesh is also grafted onto the Fire Demon's hand socket — see below)
 
 Source repository: `KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0`
 
@@ -16,7 +16,7 @@ License: **CC0 1.0 Universal**. The asset author permits personal and commercial
 
 Encounter Lab uses one character model from the KayKit Character Pack: Skeletons:
 
-- `SkeletonWarrior.glb` for the Ash Warden training target (its built-in helmet mesh is used as-is; it ships unarmed, so a sword mesh is borrowed at runtime from the Knight model above via the shared `handslot.r` attachment bone both packs use)
+- `SkeletonWarrior.glb` for the Fire Demon training target (its built-in helmet mesh is used as-is; it ships unarmed, so a sword mesh is borrowed at runtime from the Knight model above via the shared `handslot.r` attachment bone both packs use)
 
 Source repository: `KayKit-Game-Assets/KayKit-Character-Pack-Skeletons-1.0`
 

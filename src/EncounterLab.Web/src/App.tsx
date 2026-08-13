@@ -95,7 +95,7 @@ export function App() {
   );
   const baseLiveMessage = controller.displayEvent?.summary ?? 'Encounter ready.';
   const liveMessage = accessibility.preferences.verboseAnnouncements
-    ? `${baseLiveMessage} Briv has ${controller.displayProjection.currentHitPoints} of ${controller.displayProjection.maximumHitPoints} hit points and ${controller.displayProjection.temporaryHitPoints} temporary hit points. ${controller.isReplaying ? 'Replay mode is active.' : 'Current state is active.'} Connection is ${controller.connectionStatus}.`
+    ? `${baseLiveMessage} Player has ${controller.displayProjection.currentHitPoints} of ${controller.displayProjection.maximumHitPoints} hit points and ${controller.displayProjection.temporaryHitPoints} temporary hit points. ${controller.isReplaying ? 'Replay mode is active.' : 'Current state is active.'} Connection is ${controller.connectionStatus}.`
     : baseLiveMessage;
 
   return (

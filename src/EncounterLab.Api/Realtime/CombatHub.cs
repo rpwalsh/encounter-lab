@@ -9,14 +9,14 @@ namespace EncounterLab.Api.Realtime;
     "logic it enables (SignalRCombatNotifier) is covered separately.")]
 public sealed class CombatHub : Hub
 {
-    public const string BrivGroup = "encounter:briv";
+    public const string PlayerGroup = "encounter:player";
 
     public override async Task OnConnectedAsync()
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, BrivGroup);
+        await Groups.AddToGroupAsync(Context.ConnectionId, PlayerGroup);
         await Clients.Caller.SendAsync(
             "connectionReady",
-            new { connectionId = Context.ConnectionId, characterId = "briv" });
+            new { connectionId = Context.ConnectionId, characterId = "player" });
         await base.OnConnectedAsync();
     }
 }

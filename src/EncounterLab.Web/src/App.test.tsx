@@ -7,7 +7,7 @@ import { defaultAccessibilityDebugPreferences } from './accessibility/useAccessi
 const { controllerMock, useEncounterControllerMock, useAccessibilityDebugMock } = vi.hoisted(() => {
   const encounter: Encounter = {
     character: {
-      id: 'briv', name: 'Briv', level: 5, version: 0,
+      id: 'player', name: 'Player', level: 5, version: 0,
       classes: [{ name: 'fighter', hitDiceValue: 10, classLevel: 5 }],
       stats: { strength: 15, dexterity: 12, constitution: 16, intelligence: 13, wisdom: 10, charisma: 8 },
       items: [], hitPoints: { current: 25, maximum: 25, temporary: 0 }, defenses: [],
@@ -81,7 +81,7 @@ function resetControllerMock() {
   controllerMock.replayIndex = null;
   controllerMock.encounter = {
     character: {
-      id: 'briv', name: 'Briv', level: 5, version: 0,
+      id: 'player', name: 'Player', level: 5, version: 0,
       classes: [{ name: 'fighter', hitDiceValue: 10, classLevel: 5 }],
       stats: { strength: 15, dexterity: 12, constitution: 16, intelligence: 13, wisdom: 10, charisma: 8 },
       items: [], hitPoints: { current: 25, maximum: 25, temporary: 0 }, defenses: [],
@@ -122,7 +122,7 @@ test('renders the full layout once the encounter has loaded', () => {
   resetControllerMock();
   render(<App />);
 
-  expect(screen.getByRole('heading', { name: 'Briv' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Player' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /History/ })).toBeInTheDocument();
   expect(screen.getByRole('status', { name: 'Connection status' })).toHaveTextContent('Live');
 });

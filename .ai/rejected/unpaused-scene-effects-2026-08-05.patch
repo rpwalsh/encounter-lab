@@ -7,7 +7,7 @@ motion prop." That's a real, currently-unfilled gap in this project's static
 checks, being written down here rather than left implicit.
 
 What happened: the Sparks/SmokeWisps/CharredPit components added earlier
-this session for the Ash Warden's fire pit each run their own useFrame loop
+this session for the Fire Demon's fire pit each run their own useFrame loop
 keyed off clock.getElapsedTime(), but none of them accepted or checked a
 paused prop — they kept animating regardless of the header's Pause
 animations control or the reduced-motion preference. This is exactly the
@@ -48,7 +48,7 @@ shipped, so nothing caught it until the operator noticed live.
 +      <Sparks paused={paused} />
 +      <SmokeWisps paused={paused} />
 
-`paused` here is the same prop EnemyModel already receives and BrivModel/
+`paused` here is the same prop EnemyModel already receives and PlayerModel/
 CombatEffect already use — the fix is only that these three new components
 weren't wired into it, not that the source of truth was missing.
 

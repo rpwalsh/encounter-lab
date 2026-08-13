@@ -6,7 +6,7 @@ import { DiceStation } from './DiceResult';
 
 const splitEvent: CombatEvent = {
   id: 'roll-1', sequence: 1, occurredAt: new Date(0).toISOString(), commandId: 'command-1',
-  characterId: 'briv', type: 'DiceRolled', summary: 'Briv rolled 1d8+1d6+3: 14.',
+  characterId: 'player', type: 'DiceRolled', summary: 'Player rolled 1d8+1d6+3: 14.',
   details: {
     diceExpression: '1d8+1d6+3',
     dice: [7, 4],

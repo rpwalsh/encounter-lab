@@ -76,7 +76,7 @@ function setOpacity(materials: MeshStandardMaterial[], opacity: number) {
  * server HP (hitPoints), and drives the sink/rise/ghost/gravestone
  * choreography. `knightGroupRef` is the live character model's own group;
  * this component positions and hides it directly rather than duplicating
- * Briv's mesh for the "buried" states.
+ * Player's mesh for the "buried" states.
  */
 export function DeathResurrection({
   hitPoints,

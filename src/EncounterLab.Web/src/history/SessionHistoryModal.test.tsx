@@ -10,9 +10,9 @@ const event: CombatEvent = {
   sequence: 1,
   occurredAt: new Date(0).toISOString(),
   commandId: 'command-1',
-  characterId: 'briv',
+  characterId: 'player',
   type: 'DamageApplied',
-  summary: 'Briv received 4 piercing damage.',
+  summary: 'Player received 4 piercing damage.',
   details: {
     requestedDamage: 4,
     adjustedDamage: 4,
@@ -36,7 +36,7 @@ test('presents shared encounter history in a keyboard-dismissible modal', async 
   );
 
   expect(screen.getByRole('dialog', { name: /History/ })).toBeInTheDocument();
-  expect(screen.getByText('Briv received 4 piercing damage.')).toBeVisible();
+  expect(screen.getByText('Player received 4 piercing damage.')).toBeVisible();
   expect(document.getElementById('main-content')).toHaveAttribute('aria-hidden', 'true');
 
   await user.keyboard('{Escape}');

@@ -11,7 +11,7 @@ Check:
 - **README reviewer path.** Does the "Reviewer path" / "Five-minute review
   path" section in `README.md` still point at files that exist and still
   reflect what they claim to?
-- **Core Briv behavior.** Character load from `briv.json`, damage types,
+- **Core Player behavior.** Character load from `player.json`, damage types,
   resistance/immunity, healing (capped at maximum), temporary HP
   (higher-wins, absorbs first, never healed) — confirm the domain tests
   covering these still exist and pass.

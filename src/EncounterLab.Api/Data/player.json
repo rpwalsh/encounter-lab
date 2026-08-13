@@ -1,5 +1,5 @@
 {
-  "name": "Briv",
+  "name": "Player",
   "level": 5,
   "hitPoints": 25,
   "classes": [
@@ -19,7 +19,7 @@
   },
   "items": [
     {
-      "name": "Ioun Stone of Fortitude",
+      "name": "Rock of Fortitude",
       "modifier": {
         "affectedObject": "stats",
         "affectedValue": "constitution",

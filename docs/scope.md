@@ -4,7 +4,7 @@ Encounter Lab intentionally solves the supplied HP exercise first and adds only 
 
 ## What is required
 
-- Load Briv from the supplied JSON.
+- Load Player from the supplied JSON.
 - Apply typed damage with resistance and immunity.
 - Heal without exceeding maximum HP.
 - Set non-stacking temporary HP and consume it before normal HP.

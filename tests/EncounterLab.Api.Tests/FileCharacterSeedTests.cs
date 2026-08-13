@@ -4,16 +4,16 @@ namespace EncounterLab.Api.Tests;
 
 public sealed class FileCharacterSeedTests
 {
-    private static string WriteBrivJson(object payload)
+    private static string WritePlayerJson(object payload)
     {
-        var path = Path.Combine(Path.GetTempPath(), $"briv-{Guid.NewGuid():N}.json");
+        var path = Path.Combine(Path.GetTempPath(), $"player-{Guid.NewGuid():N}.json");
         File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(payload));
         return path;
     }
 
     private static object BaseCharacter(object modifier) => new
     {
-        name = "Briv",
+        name = "Player",
         level = 5,
         hitPoints = 25,
         classes = new[] { new { name = "fighter", hitDiceValue = 10, classLevel = 5 } },
@@ -30,7 +30,7 @@ public sealed class FileCharacterSeedTests
     [InlineData("charisma", 10)]
     public void EachSupportedAbilityScoreModifierIsApplied(string stat, int expected)
     {
-        var path = WriteBrivJson(BaseCharacter(new { affectedObject = "stats", affectedValue = stat, value = 2 }));
+        var path = WritePlayerJson(BaseCharacter(new { affectedObject = "stats", affectedValue = stat, value = 2 }));
         try
         {
             var character = new FileCharacterSeed(path).Create();
@@ -54,7 +54,7 @@ public sealed class FileCharacterSeedTests
     [Fact]
     public void AnItemTargetingAnUnsupportedObjectFailsToLoad()
     {
-        var path = WriteBrivJson(BaseCharacter(new { affectedObject = "equipment", affectedValue = "strength", value = 1 }));
+        var path = WritePlayerJson(BaseCharacter(new { affectedObject = "equipment", affectedValue = "strength", value = 1 }));
         try
         {
             Assert.Throws<InvalidDataException>(() => new FileCharacterSeed(path).Create());
@@ -68,7 +68,7 @@ public sealed class FileCharacterSeedTests
     [Fact]
     public void AnItemTargetingAnUnsupportedStatFailsToLoad()
     {
-        var path = WriteBrivJson(BaseCharacter(new { affectedObject = "stats", affectedValue = "luck", value = 1 }));
+        var path = WritePlayerJson(BaseCharacter(new { affectedObject = "stats", affectedValue = "luck", value = 1 }));
         try
         {
             Assert.Throws<InvalidDataException>(() => new FileCharacterSeed(path).Create());

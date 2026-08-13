@@ -6,7 +6,7 @@ import { ReplayTimeline } from './ReplayTimeline';
 
 const event: CombatEvent = {
   id: 'event-1', sequence: 7, occurredAt: new Date(0).toISOString(), commandId: 'command-1',
-  characterId: 'briv', type: 'EncounterReset', summary: 'Encounter reset.', details: {},
+  characterId: 'player', type: 'EncounterReset', summary: 'Encounter reset.', details: {},
   stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 1 },
 };
 

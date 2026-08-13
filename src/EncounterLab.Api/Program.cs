@@ -17,15 +17,15 @@ var connectionStringBuilder = new SqliteConnectionStringBuilder(configuredConnec
     ForeignKeys = true
 };
 var connectionString = connectionStringBuilder.ToString();
-var brivPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Data", "briv.json");
-if (!File.Exists(brivPath))
+var playerPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Data", "player.json");
+if (!File.Exists(playerPath))
 {
-    brivPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "briv.json");
+    playerPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "player.json");
 }
 
 builder.Services.AddPooledDbContextFactory<EncounterDbContext>(options =>
     options.UseSqlite(connectionString));
-builder.Services.AddSingleton<ICharacterSeed>(_ => new FileCharacterSeed(brivPath));
+builder.Services.AddSingleton<ICharacterSeed>(_ => new FileCharacterSeed(playerPath));
 builder.Services.AddSingleton<ICombatStore, SqliteCombatStore>();
 builder.Services.AddSingleton<IRandomSource, CryptoRandomSource>();
 builder.Services.AddSingleton<CombatService>();

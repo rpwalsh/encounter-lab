@@ -30,10 +30,10 @@ function fetchRespectingAbort(respond?: () => Promise<Response>) {
   }));
 }
 
-const baseInput = { characterId: 'briv', commandId: 'command-1', expectedVersion: 0 };
+const baseInput = { characterId: 'player', commandId: 'command-1', expectedVersion: 0 };
 const encounter: Encounter = {
   character: {
-    id: 'briv', name: 'Briv', level: 5, version: 0,
+    id: 'player', name: 'Player', level: 5, version: 0,
     classes: [], stats: { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
     items: [], hitPoints: { current: 25, maximum: 25, temporary: 0 }, defenses: [],
   },
@@ -60,7 +60,7 @@ test('a timeout with no explicit limit reports the default timeout in its messag
   vi.useFakeTimers();
   vi.stubGlobal('fetch', fetchRespectingAbort());
 
-  const pending = getEncounter('briv').catch((error: unknown) => error);
+  const pending = getEncounter('player').catch((error: unknown) => error);
   await vi.advanceTimersByTimeAsync(12_000);
   const error = await pending;
 
@@ -72,7 +72,7 @@ test('getEncounter posts a query and returns the encounter', async () => {
   const fetchMock = fetchRespectingAbort(() => jsonResponse({ data: { encounter } }));
   vi.stubGlobal('fetch', fetchMock);
 
-  const result = await getEncounter('briv');
+  const result = await getEncounter('player');
 
   expect(result).toEqual(encounter);
   const [url, init] = fetchMock.mock.calls[0];
@@ -80,13 +80,13 @@ test('getEncounter posts a query and returns the encounter', async () => {
   expect(init.method).toBe('POST');
   const body = JSON.parse(init.body as string);
   expect(body.query).toContain('query Encounter');
-  expect(body.variables).toEqual({ characterId: 'briv' });
+  expect(body.variables).toEqual({ characterId: 'player' });
 });
 
 test('a non-ok HTTP response is an uncertain error', async () => {
   vi.stubGlobal('fetch', fetchRespectingAbort(() => jsonResponse({}, 500)));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({
+  await expect(getEncounter('player')).rejects.toMatchObject({
     uncertain: true,
     message: 'GraphQL request failed with HTTP 500.',
   });
@@ -97,7 +97,7 @@ test('a GraphQL error with a deterministic code is not uncertain', async () => {
     errors: [{ message: 'stale version', extensions: { code: 'VERSION_CONFLICT', actualVersion: 5 } }],
   })));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({
+  await expect(getEncounter('player')).rejects.toMatchObject({
     uncertain: false,
     code: 'VERSION_CONFLICT',
     actualVersion: 5,
@@ -110,7 +110,7 @@ test('a GraphQL error without a code is uncertain', async () => {
     errors: [{ message: 'unexpected failure' }],
   })));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({ uncertain: true, code: undefined });
+  await expect(getEncounter('player')).rejects.toMatchObject({ uncertain: true, code: undefined });
 });
 
 test('a GraphQL error with a non-deterministic code is uncertain', async () => {
@@ -118,13 +118,13 @@ test('a GraphQL error with a non-deterministic code is uncertain', async () => {
     errors: [{ message: 'boom', extensions: { code: 'INTERNAL_SERVER_ERROR' } }],
   })));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({ uncertain: true, code: 'INTERNAL_SERVER_ERROR' });
+  await expect(getEncounter('player')).rejects.toMatchObject({ uncertain: true, code: 'INTERNAL_SERVER_ERROR' });
 });
 
 test('a response with neither errors nor data is an uncertain error', async () => {
   vi.stubGlobal('fetch', fetchRespectingAbort(() => jsonResponse({})));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({
+  await expect(getEncounter('player')).rejects.toMatchObject({
     uncertain: true,
     message: 'GraphQL response did not contain data.',
   });
@@ -133,7 +133,7 @@ test('a response with neither errors nor data is an uncertain error', async () =
 test('a network failure is an uncertain error', async () => {
   vi.stubGlobal('fetch', vi.fn(() => Promise.reject(new TypeError('Failed to fetch'))));
 
-  await expect(getEncounter('briv')).rejects.toMatchObject({
+  await expect(getEncounter('player')).rejects.toMatchObject({
     uncertain: true,
     message: 'The server could not be reached.',
   });
@@ -143,7 +143,7 @@ test('an internal timeout produces an uncertain error naming the timeout', async
   vi.useFakeTimers();
   vi.stubGlobal('fetch', fetchRespectingAbort());
 
-  const pending = getEncounter('briv', { timeoutMilliseconds: 100 })
+  const pending = getEncounter('player', { timeoutMilliseconds: 100 })
     .catch((error: unknown) => error);
   await vi.advanceTimersByTimeAsync(100);
   const error = await pending;
@@ -158,7 +158,7 @@ test('a caller-provided abort signal cancels the request without becoming a Grap
   vi.stubGlobal('fetch', fetchRespectingAbort());
   const controller = new AbortController();
 
-  const pending = getEncounter('briv', { signal: controller.signal }).catch((error: unknown) => error);
+  const pending = getEncounter('player', { signal: controller.signal }).catch((error: unknown) => error);
   controller.abort();
   const error = await pending;
 
@@ -172,7 +172,7 @@ test('a signal that is already aborted cancels the request immediately', async (
   controller.abort();
 
   await expect(
-    getEncounter('briv', { signal: controller.signal }),
+    getEncounter('player', { signal: controller.signal }),
   ).rejects.toMatchObject({ name: 'AbortError' });
 });
 
@@ -188,7 +188,7 @@ test.each([
     character: encounter.character,
     event: {
       id: 'evt-1', sequence: 1, occurredAt: new Date(0).toISOString(), commandId: 'command-1',
-      characterId: 'briv', type: 'DamageApplied', summary: 'ok', details: {}, stateAfter: encounter.character.hitPoints,
+      characterId: 'player', type: 'DamageApplied', summary: 'ok', details: {}, stateAfter: encounter.character.hitPoints,
     },
     wasReplay: false,
   };

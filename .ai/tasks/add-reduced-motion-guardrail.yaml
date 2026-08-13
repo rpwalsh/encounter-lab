@@ -1,6 +1,6 @@
 id: add-reduced-motion-guardrail-001
 objective: >
-  Close the gap found while fixing the unpaused Ash Warden fire effects:
+  Close the gap found while fixing the unpaused Fire Demon fire effects:
   accessibility-check.py had no automated check that a continuously
   animating scene component actually respects the paused/reduced-motion
   prop, so this exact bug class had no guardrail against a recurrence.

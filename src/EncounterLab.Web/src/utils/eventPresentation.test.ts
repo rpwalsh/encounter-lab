@@ -4,7 +4,7 @@ import type { CombatEvent } from '../types';
 
 test('explains server damage reasoning', () => {
   const event: CombatEvent = {
-    id: '1', sequence: 1, occurredAt: new Date().toISOString(), commandId: 'c', characterId: 'briv',
+    id: '1', sequence: 1, occurredAt: new Date().toISOString(), commandId: 'c', characterId: 'player',
     type: 'DamageApplied', summary: 'damage',
     details: {
       requestedDamage: 19,
@@ -23,7 +23,7 @@ test('explains server damage reasoning', () => {
 
 test('explains healing reasoning', () => {
   const event: CombatEvent = {
-    id: '3', sequence: 3, occurredAt: new Date().toISOString(), commandId: 'e', characterId: 'briv',
+    id: '3', sequence: 3, occurredAt: new Date().toISOString(), commandId: 'e', characterId: 'player',
     type: 'CharacterHealed', summary: 'healed',
     details: { requestedHealing: 6, appliedHealing: 4 },
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 3 },
@@ -34,7 +34,7 @@ test('explains healing reasoning', () => {
 
 test('explains temporary hit point reasoning', () => {
   const event: CombatEvent = {
-    id: '4', sequence: 4, occurredAt: new Date().toISOString(), commandId: 'f', characterId: 'briv',
+    id: '4', sequence: 4, occurredAt: new Date().toISOString(), commandId: 'f', characterId: 'player',
     type: 'TemporaryHitPointsSet', summary: 'shielded',
     details: { requestedTemporaryHitPoints: 5, appliedTemporaryHitPoints: 10 },
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 10, version: 4 },
@@ -45,7 +45,7 @@ test('explains temporary hit point reasoning', () => {
 
 test('explains clearing temporary HP', () => {
   const event: CombatEvent = {
-    id: '4b', sequence: 4, occurredAt: new Date().toISOString(), commandId: 'f2', characterId: 'briv',
+    id: '4b', sequence: 4, occurredAt: new Date().toISOString(), commandId: 'f2', characterId: 'player',
     type: 'TemporaryHitPointsCleared', summary: 'cleared',
     details: { requestedTemporaryHitPoints: 0, appliedTemporaryHitPoints: 0 },
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 4 },
@@ -56,7 +56,7 @@ test('explains clearing temporary HP', () => {
 
 test('explains a dice roll with no group breakdown by falling back to the raw dice', () => {
   const event: CombatEvent = {
-    id: '5', sequence: 5, occurredAt: new Date().toISOString(), commandId: 'g', characterId: 'briv',
+    id: '5', sequence: 5, occurredAt: new Date().toISOString(), commandId: 'g', characterId: 'player',
     type: 'DiceRolled', summary: 'rolled',
     details: { dice: [4, 5], modifier: 2, total: 11 },
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 5 },
@@ -67,7 +67,7 @@ test('explains a dice roll with no group breakdown by falling back to the raw di
 
 test('explains a split dice roll using the server-provided group breakdown', () => {
   const event: CombatEvent = {
-    id: '5b', sequence: 5, occurredAt: new Date().toISOString(), commandId: 'g2', characterId: 'briv',
+    id: '5b', sequence: 5, occurredAt: new Date().toISOString(), commandId: 'g2', characterId: 'player',
     type: 'DiceRolled', summary: 'rolled',
     details: {
       diceExpression: '1d8+1d6+3',
@@ -88,7 +88,7 @@ test('explains a split dice roll using the server-provided group breakdown', () 
 
 test('explains an encounter reset', () => {
   const event: CombatEvent = {
-    id: '6', sequence: 6, occurredAt: new Date().toISOString(), commandId: 'h', characterId: 'briv',
+    id: '6', sequence: 6, occurredAt: new Date().toISOString(), commandId: 'h', characterId: 'player',
     type: 'EncounterReset', summary: 'reset', details: {},
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 6 },
   };
@@ -98,7 +98,7 @@ test('explains an encounter reset', () => {
 
 test('healing, temporary HP, and dice reasoning default missing numeric fields to zero', () => {
   const healed: CombatEvent = {
-    id: '7', sequence: 7, occurredAt: new Date().toISOString(), commandId: 'i', characterId: 'briv',
+    id: '7', sequence: 7, occurredAt: new Date().toISOString(), commandId: 'i', characterId: 'player',
     type: 'CharacterHealed', summary: 'healed', details: {},
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 7 },
   };
@@ -113,7 +113,7 @@ test('healing, temporary HP, and dice reasoning default missing numeric fields t
 
 test('does not present unknown event types as encounter resets', () => {
   const event: CombatEvent = {
-    id: '2', sequence: 2, occurredAt: new Date().toISOString(), commandId: 'd', characterId: 'briv',
+    id: '2', sequence: 2, occurredAt: new Date().toISOString(), commandId: 'd', characterId: 'player',
     type: 'FutureEvent', summary: 'future', details: {},
     stateAfter: { currentHitPoints: 25, maximumHitPoints: 25, temporaryHitPoints: 0, version: 2 },
   };

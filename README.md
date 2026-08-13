@@ -1,6 +1,6 @@
 # Encounter Lab
 
-Encounter Lab implements the Briv hit-point API challenge and the full-stack
+Encounter Lab implements the Player hit-point API challenge and the full-stack
 frontend addendum as a server-authoritative combat-state sample.
 
 #TL;DR.
@@ -11,9 +11,9 @@ immunity, dice outcomes, command versioning, event sequence, and
 persistence. The React frontend sends player intent and renders committed
 backend state — it never computes an outcome itself.
 
-![Encounter Lab running with Briv, HP controls, dice, and history](docs/screenshots/encounter-lab-briv.png)
+![Encounter Lab running with Player, HP controls, dice, and history](docs/screenshots/encounter-lab-player.png)
 
-Briv's current/max HP, temporary HP, stats, defenses, equipment, and
+Player's current/max HP, temporary HP, stats, defenses, equipment, and
 committed combat history on the left; damage/heal/temp-HP controls and
 server-rolled dice on the right; the 3D battlefield in the center.
 
@@ -36,7 +36,7 @@ For local development without Docker, see [`RUN_LOCALLY.md`](RUN_LOCALLY.md).
 
 | Requirement | Implemented |
 |---|---|
-| Load Briv from `briv.json` | Yes — `FileCharacterSeed` reads the one canonical seed file |
+| Load Player from `player.json` | Yes — `FileCharacterSeed` reads the one canonical seed file |
 | Deal typed damage | Yes |
 | Apply resistance and immunity | Yes — odd-damage rounding tested |
 | Heal without exceeding max HP | Yes |
@@ -71,7 +71,7 @@ Start here for a fast code review.
 
 | Area | Files |
 |---|---|
-| Briv seed loading | `src/EncounterLab.Api/Data/briv.json`, `src/EncounterLab.Infrastructure/FileCharacterSeed.cs` |
+| Player seed loading | `src/EncounterLab.Api/Data/player.json`, `src/EncounterLab.Infrastructure/FileCharacterSeed.cs` |
 | HP rules | `src/EncounterLab.Domain/Combat/HitPointPool.cs` |
 | Character state transitions | `src/EncounterLab.Domain/Combat/CharacterState.cs` |
 | Dice rules | `src/EncounterLab.Domain/Combat/DiceExpression.cs` |
@@ -80,7 +80,7 @@ Start here for a fast code review.
 | GraphQL API | `src/EncounterLab.Api/GraphQL/Query.cs`, `src/EncounterLab.Api/GraphQL/Mutation.cs` |
 | Frontend API client | `src/EncounterLab.Web/src/api/graphql.ts` |
 | Frontend state/retry/reconciliation | `src/EncounterLab.Web/src/state/useEncounterController.ts`, `src/EncounterLab.Web/src/state/encounterMerge.ts` |
-| Briv UI controls | `src/EncounterLab.Web/src/components/CharacterPanel.tsx`, `src/EncounterLab.Web/src/components/ActionPanel.tsx` |
+| Player UI controls | `src/EncounterLab.Web/src/components/CharacterPanel.tsx`, `src/EncounterLab.Web/src/components/ActionPanel.tsx` |
 | Live sync | `src/EncounterLab.Api/Realtime/`, `src/EncounterLab.Web/src/api/combatHub.ts` |
 | AI engineering process | `docs/ai-assurance.md`, `.ai/`, `AGENTS.md`, `.github/prompts/`, `.claude/` |
 
@@ -92,10 +92,10 @@ required-vs-extension breakdown.
 
 ## Using the app
 
-1. Open the web app. Briv loads from the backend seed data.
+1. Open the web app. Player loads from the backend seed data.
 2. Use **Damage** to apply typed damage.
-   - Fire is ignored — Briv has fire immunity.
-   - Slashing is halved (rounded down) — Briv has slashing resistance.
+   - Fire is ignored — Player has fire immunity.
+   - Slashing is halved (rounded down) — Player has slashing resistance.
    - Other damage types apply normally.
 3. Use **Heal** to restore HP up to the maximum.
 4. Use **Temp HP** to grant non-stacking temporary HP, or **Clear** to zero
@@ -226,9 +226,9 @@ Intentionally omitted:
 - production observability
 - a distributed cache/message bus
 - deployment hardening beyond `docker compose up`
-- a full D&D rules engine, campaign builder, or asset marketplace
+- a full tabletop RPG rules engine, campaign builder, or asset marketplace
 
-The current implementation focuses on the challenge requirements: Briv's
+The current implementation focuses on the challenge requirements: Player's
 HP rules, backend authority, API behavior, the frontend addendum,
 accessibility, testing, and a reviewable AI-assisted engineering process.
 Full reasoning for each omission — what was picked, what wasn't, and why —

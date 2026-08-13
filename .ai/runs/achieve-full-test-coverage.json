@@ -27,7 +27,7 @@
     "src/EncounterLab.Web/src/scene/EncounterScene.tsx and DamageEffects.tsx: Three.js/WebGL rendering, not meaningfully unit-testable (vitest.config.ts coverage.exclude)",
     "~7 frontend branches with empty {start:{},end:{}} location metadata in raw v8 JSON: synthetic branches from the Babel/React-Fast-Refresh transform, not from this project's source (vitest.config.ts threshold comment)",
     "EncounterLab.Api.Realtime.CombatHub: SignalR lifecycle hook needing a live TestServer connection to test meaningfully ([ExcludeFromCodeCoverage] with Justification)",
-    "Program.cs composition-root edges (CORS delegate, brivPath fallback, connection-string fallback) and SignalRCombatNotifier's broadcast-failure catch branches: left uncovered, not excluded, and named explicitly in the final report rather than hidden"
+    "Program.cs composition-root edges (CORS delegate, playerPath fallback, connection-string fallback) and SignalRCombatNotifier's broadcast-failure catch branches: left uncovered, not excluded, and named explicitly in the final report rather than hidden"
   ],
   "executedValidation": [
     "npx vitest run --coverage (16 files, 184 tests, exit 0)",

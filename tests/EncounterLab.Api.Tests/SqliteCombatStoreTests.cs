@@ -14,10 +14,10 @@ public sealed class SqliteCombatStoreTests
     {
         var databasePath = Path.Combine(Path.GetTempPath(), $"encounterlab-store-{Guid.NewGuid():N}.db");
         var connectionString = $"Data Source={databasePath}";
-        var seedPath = Path.Combine(Path.GetTempPath(), $"briv-store-{Guid.NewGuid():N}.json");
+        var seedPath = Path.Combine(Path.GetTempPath(), $"player-store-{Guid.NewGuid():N}.json");
         File.WriteAllText(seedPath, System.Text.Json.JsonSerializer.Serialize(new
         {
-            name = "Briv",
+            name = "Player",
             level = 5,
             hitPoints = 1_000_000,
             classes = new[] { new { name = "fighter", hitDiceValue = 10, classLevel = 5 } },

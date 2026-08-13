@@ -48,7 +48,7 @@ const pendingStorageKey = 'encounter-lab.pending-command.v1';
 
 function makeCharacter(overrides: Partial<Character> = {}): Character {
   return {
-    id: 'briv', name: 'Briv', level: 5, version: 0,
+    id: 'player', name: 'Player', level: 5, version: 0,
     classes: [{ name: 'fighter', hitDiceValue: 10, classLevel: 5 }],
     stats: { strength: 15, dexterity: 12, constitution: 16, intelligence: 13, wisdom: 10, charisma: 8 },
     items: [], hitPoints: { current: 25, maximum: 25, temporary: 0 }, defenses: [],
@@ -59,7 +59,7 @@ function makeCharacter(overrides: Partial<Character> = {}): Character {
 function makeEvent(overrides: Partial<CombatEvent> = {}): CombatEvent {
   return {
     id: 'event-1', sequence: 1, occurredAt: new Date(0).toISOString(), commandId: 'command-1',
-    characterId: 'briv', type: 'DamageApplied', summary: 'Briv took damage.',
+    characterId: 'player', type: 'DamageApplied', summary: 'Player took damage.',
     details: {}, stateAfter: { currentHitPoints: 20, maximumHitPoints: 25, temporaryHitPoints: 0, version: 1 },
     ...overrides,
   };
@@ -107,7 +107,7 @@ test('loads the encounter on mount and starts the combat hub', async () => {
 
   await waitFor(() => expect(result.current.encounter).not.toBeNull());
 
-  expect(result.current.encounter?.character.name).toBe('Briv');
+  expect(result.current.encounter?.character.name).toBe('Player');
   expect(result.current.loadError).toBeNull();
   expect(hubStart).toHaveBeenCalledTimes(1);
 });
@@ -198,7 +198,7 @@ test('executing a command applies the result and clears busy/pending state', asy
   });
 
   expect(applyDamageMock).toHaveBeenCalledTimes(1);
-  expect(applyDamageMock.mock.calls[0][0]).toMatchObject({ amount: 5, damageType: 'FIRE', characterId: 'briv' });
+  expect(applyDamageMock.mock.calls[0][0]).toMatchObject({ amount: 5, damageType: 'FIRE', characterId: 'player' });
   expect(result.current.encounter?.character.hitPoints.current).toBe(20);
   expect(result.current.busy).toBe(false);
   expect(result.current.hasPendingCommand).toBe(false);
@@ -260,7 +260,7 @@ test('an in-flight load aborted by unmount does not set a load error', async () 
 
 test('a pending command from a previous session is restored and hasPendingCommand is true', async () => {
   window.sessionStorage.setItem(pendingStorageKey, JSON.stringify({
-    kind: 'heal', amount: 5, characterId: 'briv', commandId: 'restored-command', expectedVersion: 0,
+    kind: 'heal', amount: 5, characterId: 'player', commandId: 'restored-command', expectedVersion: 0,
   }));
   getEncounterMock.mockResolvedValue(makeEncounter());
 
@@ -273,8 +273,8 @@ test('a pending command from a previous session is restored and hasPendingComman
 test.each([
   ['a non-object value', JSON.stringify(42)],
   ['a characterId of the wrong type', JSON.stringify({ characterId: 1, commandId: 'x', expectedVersion: 0, kind: 'reset' })],
-  ['a non-integer expectedVersion', JSON.stringify({ characterId: 'briv', commandId: 'x', expectedVersion: 1.5, kind: 'reset' })],
-  ['an unrecognized kind', JSON.stringify({ characterId: 'briv', commandId: 'x', expectedVersion: 0, kind: 'unknown' })],
+  ['a non-integer expectedVersion', JSON.stringify({ characterId: 'player', commandId: 'x', expectedVersion: 1.5, kind: 'reset' })],
+  ['an unrecognized kind', JSON.stringify({ characterId: 'player', commandId: 'x', expectedVersion: 0, kind: 'unknown' })],
 ])('rejects a stored pending command that is %s', async (_label, stored) => {
   window.sessionStorage.setItem(pendingStorageKey, stored);
   const { result } = renderHook(() => useEncounterController());
@@ -283,9 +283,9 @@ test.each([
 });
 
 test.each([
-  ['roll', JSON.stringify({ characterId: 'briv', commandId: 'x', expectedVersion: 0, kind: 'roll', expression: '1d20' })],
-  ['reset', JSON.stringify({ characterId: 'briv', commandId: 'x', expectedVersion: 0, kind: 'reset' })],
-  ['clearTemporary', JSON.stringify({ characterId: 'briv', commandId: 'x', expectedVersion: 0, kind: 'clearTemporary' })],
+  ['roll', JSON.stringify({ characterId: 'player', commandId: 'x', expectedVersion: 0, kind: 'roll', expression: '1d20' })],
+  ['reset', JSON.stringify({ characterId: 'player', commandId: 'x', expectedVersion: 0, kind: 'reset' })],
+  ['clearTemporary', JSON.stringify({ characterId: 'player', commandId: 'x', expectedVersion: 0, kind: 'clearTemporary' })],
 ])('restores a valid stored %s pending command', async (_label, stored) => {
   window.sessionStorage.setItem(pendingStorageKey, stored);
   const { result } = renderHook(() => useEncounterController());
@@ -388,11 +388,11 @@ test('a composite roll action never applies an HP command if the dice roll itsel
 });
 
 test.each([
-  ['heal', JSON.stringify({ characterId: 'briv', commandId: 'restored', expectedVersion: 0, kind: 'heal', amount: 5 })],
-  ['temporary', JSON.stringify({ characterId: 'briv', commandId: 'restored', expectedVersion: 0, kind: 'temporary', amount: 5 })],
-  ['clearTemporary', JSON.stringify({ characterId: 'briv', commandId: 'restored', expectedVersion: 0, kind: 'clearTemporary' })],
-  ['roll', JSON.stringify({ characterId: 'briv', commandId: 'restored', expectedVersion: 0, kind: 'roll', expression: '1d20' })],
-  ['reset', JSON.stringify({ characterId: 'briv', commandId: 'restored', expectedVersion: 0, kind: 'reset' })],
+  ['heal', JSON.stringify({ characterId: 'player', commandId: 'restored', expectedVersion: 0, kind: 'heal', amount: 5 })],
+  ['temporary', JSON.stringify({ characterId: 'player', commandId: 'restored', expectedVersion: 0, kind: 'temporary', amount: 5 })],
+  ['clearTemporary', JSON.stringify({ characterId: 'player', commandId: 'restored', expectedVersion: 0, kind: 'clearTemporary' })],
+  ['roll', JSON.stringify({ characterId: 'player', commandId: 'restored', expectedVersion: 0, kind: 'roll', expression: '1d20' })],
+  ['reset', JSON.stringify({ characterId: 'player', commandId: 'restored', expectedVersion: 0, kind: 'reset' })],
 ])('resubmitting a restored %s intent retries the same command', async (kind, stored) => {
   window.sessionStorage.setItem(pendingStorageKey, stored);
   healCharacterMock.mockResolvedValue(makeResult());
@@ -495,7 +495,7 @@ test('corrupt pending-command storage is ignored rather than crashing', async ()
 
 test('a restored pending command already committed is reconciled away on load', async () => {
   window.sessionStorage.setItem(pendingStorageKey, JSON.stringify({
-    kind: 'heal', amount: 5, characterId: 'briv', commandId: 'already-committed', expectedVersion: 0,
+    kind: 'heal', amount: 5, characterId: 'player', commandId: 'already-committed', expectedVersion: 0,
   }));
   getEncounterMock.mockResolvedValue(makeEncounter({
     events: [makeEvent({ commandId: 'already-committed' })],
@@ -509,7 +509,7 @@ test('a restored pending command already committed is reconciled away on load', 
 
 test('submitting a different intent while a command is pending is rejected', async () => {
   window.sessionStorage.setItem(pendingStorageKey, JSON.stringify({
-    kind: 'damage', amount: 5, damageType: 'FIRE', characterId: 'briv', commandId: 'restored', expectedVersion: 0,
+    kind: 'damage', amount: 5, damageType: 'FIRE', characterId: 'player', commandId: 'restored', expectedVersion: 0,
   }));
   const { result } = renderHook(() => useEncounterController());
   await waitFor(() => expect(result.current.encounter).not.toBeNull());
@@ -525,7 +525,7 @@ test('submitting a different intent while a command is pending is rejected', asy
 
 test('resubmitting the same intent while pending retries the same restored command', async () => {
   window.sessionStorage.setItem(pendingStorageKey, JSON.stringify({
-    kind: 'damage', amount: 5, damageType: 'FIRE', characterId: 'briv', commandId: 'restored', expectedVersion: 0,
+    kind: 'damage', amount: 5, damageType: 'FIRE', characterId: 'player', commandId: 'restored', expectedVersion: 0,
   }));
   applyDamageMock.mockResolvedValue(makeResult());
   const { result } = renderHook(() => useEncounterController());
