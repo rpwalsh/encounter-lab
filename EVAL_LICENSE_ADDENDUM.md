@@ -4,7 +4,7 @@ This addendum is a limited license grant supplementing the LICENSE file in
 this repository. It does not modify or expand the LICENSE for any party
 other than the Licensee named below.
 
-**Licensor:** Sarah Walsh ("Licensor"), copyright holder of the software in
+**Licensor:** Ryan P. Walsh ("Licensor"), copyright holder of the software in
 this repository (the "Software").
 
 **Licensee:** Wizards of the Coast ("Licensee").
