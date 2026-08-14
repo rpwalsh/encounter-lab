@@ -6,6 +6,8 @@ frontend addendum as a server-authoritative combat-state sample.
 #TL;DR.
 see [TLDR_5_Minute_Review.md](TLDR_5_Minute_Review.md)
 
+![Encounter Lab combat UI showing live HP, resistances, and event log](docs/screenshots/app.jpg)
+
 The backend owns combat truth: HP, temporary HP, healing, resistance,
 immunity, dice outcomes, command versioning, event sequence, and
 persistence. The React frontend sends player intent and renders committed
